@@ -1,4 +1,5 @@
-pyrogram==2.0.106
-tgcrypto
-pytgcalls==1.2.5
-yt-dlp
+pyrogram==2.0.59
+pytgcalls==0.2.3
+yt-dlp==2023.12.21
+tgcrypto==1.4.3
+Flask==2.3.2
