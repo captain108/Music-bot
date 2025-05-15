@@ -3,14 +3,13 @@ services:
     name: telegram-music-bot
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python bot.py
-    autoDeploy: true
+    startCommand: python main.py
     envVars:
       - key: API_ID
-        value: your_api_id
+        sync: false
       - key: API_HASH
-        value: your_api_hash
+        sync: false
       - key: BOT_TOKEN
-        value: your_bot_token
+        sync: false
       - key: OWNER_ID
-        value: your_user_id
+        sync: false
