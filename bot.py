@@ -155,16 +155,33 @@ async def ping(_, message):
 async def broadcast(_, message):
     if len(message.command) < 2:
         return await message.reply("Usage: /broadcast <message>")
+
     text = message.text.split(None, 1)[1]
     count = 0
+
+    # Broadcast to all groups and supergroups
     async for dialog in app.iter_dialogs():
         if dialog.chat.type in ("group", "supergroup"):
             try:
                 await app.send_message(dialog.chat.id, text)
                 count += 1
-            except:
-                continue
-    await message.reply(f"Broadcast sent to {count} groups.")
+            except Exception:
+                pass
+
+    # Broadcast to all individual users saved in USERS_FILE
+    try:
+        with open(USERS_FILE, "r") as f:
+            user_ids = f.read().splitlines()
+        for user_id in user_ids:
+            try:
+                await app.send_message(int(user_id), text)
+                count += 1
+            except Exception:
+                pass
+    except FileNotFoundError:
+        pass
+
+    await message.reply(f"Broadcast sent to {count} chats (groups + users).")
 
 
 @app.on_message(filters.command("data") & filters.user(OWNER_ID))
